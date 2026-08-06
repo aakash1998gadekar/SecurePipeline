@@ -1,0 +1,5 @@
+# Accepted vulnerabilities with justification
+# Format: CVE-ID or VULNERABILITY-ID
+
+# Example (uncomment when needed):
+# CVE-2023-XXXXX  # Low risk, no network exposure, fix not available

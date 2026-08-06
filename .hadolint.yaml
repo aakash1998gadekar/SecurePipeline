@@ -1,0 +1,7 @@
+ignored:
+  - DL3008  # Pin versions in apt-get (we use slim base, minimal packages)
+
+trustedRegistries:
+  - docker.io
+
+failure-threshold: warning
