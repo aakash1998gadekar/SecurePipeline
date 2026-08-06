@@ -1,0 +1,15 @@
+framework:
+  - dockerfile
+  - github_actions
+  - yaml
+
+compact: true
+quiet: true
+
+skip-check:
+  - CKV_DOCKER_2   # Healthcheck - we already have one, Checkov sometimes misdetects
+  - CKV2_GHA_1     # Pin GitHub Actions to commit SHA (we use version tags for readability)
+
+hard-fail-on:
+  - CRITICAL
+  - HIGH
