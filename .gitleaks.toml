@@ -1,0 +1,19 @@
+title = "gitleaks config"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Allowlisted patterns"
+paths = [
+    '''\.env\.example''',
+    '''requirements.*''',
+    '''.*test.*''',
+]
+
+# Custom rules for additional patterns
+[[rules]]
+id = "generic-api-key-custom"
+description = "Detect potential API keys in Python files"
+regex = '''(?i)(api[_-]?key|apikey|secret[_-]?key)\s*[=:]\s*['"][a-zA-Z0-9]{20,}['"]'''
+path = '''\.py$'''
