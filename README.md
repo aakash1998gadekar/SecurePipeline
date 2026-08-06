@@ -139,6 +139,4 @@ Each phase of this project taught me a specific DevSecOps concept:
 - **Testing**: pytest + pytest-asyncio + pytest-cov
 - **CI/CD**: GitHub Actions
 
-## License
 
-MIT — see [LICENSE](LICENSE)
