@@ -11,7 +11,7 @@ jobs:
     name: OWASP ZAP Baseline Scan
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Build and start application
         run: |
@@ -43,7 +43,7 @@ jobs:
     name: OWASP ZAP API Scan
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Build and start application
         run: |
