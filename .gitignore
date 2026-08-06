@@ -40,3 +40,5 @@ Thumbs.db
 # Security scan results (may contain sensitive paths)
 reports/
 *.sarif
+.ruff_cache/
+.coverage
