@@ -1,0 +1,70 @@
+name: SAST
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  bandit:
+    name: Bandit Security Scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Bandit
+        run: pip install bandit[toml]
+
+      - name: Run Bandit
+        run: bandit -r backend/app/ -c .bandit -f json -o bandit-report.json || true
+
+      - name: Check for HIGH/CRITICAL findings
+        run: |
+          bandit -r backend/app/ -c .bandit -ll -ii
+          # -ll = only HIGH severity, -ii = only HIGH confidence
+
+      - name: Upload Bandit Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bandit-report
+          path: bandit-report.json
+
+  semgrep:
+    name: Semgrep SAST
+    runs-on: ubuntu-latest
+    container:
+      image: semgrep/semgrep
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run Semgrep
+        run: semgrep scan --config=p/python --config=p/owasp-top-ten --config=p/security-audit backend/app/ --json --output=semgrep-report.json || true
+
+      - name: Check for errors (non-zero = findings)
+        run: semgrep scan --config=p/python --config=p/owasp-top-ten backend/app/ --error --severity ERROR
+
+      - name: Upload Semgrep Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: semgrep-report
+          path: semgrep-report.json
+
+  ruff-security:
+    name: Ruff Security Rules
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Ruff
+        run: pip install ruff
+
+      - name: Run Ruff with security rules
+        run: ruff check backend/ --config ruff.toml

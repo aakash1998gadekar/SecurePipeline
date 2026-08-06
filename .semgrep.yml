@@ -1,0 +1,5 @@
+rules:
+  - id: python.django.security
+  - id: python.flask.security
+  - id: python.lang.security
+  - id: python.lang.best-practice

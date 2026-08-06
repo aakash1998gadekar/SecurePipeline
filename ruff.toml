@@ -1,0 +1,25 @@
+target-version = "py39"
+line-length = 120
+
+[lint]
+select = [
+    "E",    # pycodestyle errors
+    "W",    # pycodestyle warnings
+    "F",    # pyflakes
+    "S",    # flake8-bandit (security)
+    "B",    # flake8-bugbear
+    "A",    # flake8-builtins
+    "C4",   # flake8-comprehensions
+    "UP",   # pyupgrade
+]
+ignore = [
+    "E501",  # line too long (handled by formatter)
+    "S101",  # assert in tests is fine
+    "S105",  # possible hardcoded password (false positives on variable names)
+    "S106",  # same as above
+    "B008",  # function call in default arg (FastAPI Depends pattern)
+    "UP045", # X | None syntax (needs Python 3.10+, we support 3.9)
+]
+
+[lint.per-file-ignores]
+"backend/tests/*" = ["S101", "S106"]
